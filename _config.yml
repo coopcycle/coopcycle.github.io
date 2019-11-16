@@ -21,18 +21,34 @@
 title: Your awesome title
 email: dev@coopcycle.org
 description: >- # this means to ignore newlines until "baseurl:"
-  Write an awesome description for your new site here. You can edit this
-  line in _config.yml. It will appear in your document head meta (for
-  Google search results) and in your feed.xml site description.
+  CoopCycle Tech Blog
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: coopcycle
 github_username:  coopcycle
 
 # Build settings
-theme: minima
+remote_theme: amitmerchant1990/reverie
 plugins:
+  - jekyll-sitemap
   - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-paginate
+
+# Reverie config
+
+name: CoopCycle
+author: CoopCycle Team
+avatar: https://coopcycle.org/images/logo.svg
+google_analytics: ~
+footer-links:
+  email: dev@coopcycle.org
+  facebook: coopcycle
+  github: coopcycle
+  instagram: coopcycle
+  rss: rss
+  twitter: coopcycle
+  youtube: # channel/<your_long_string> or user/<user-name>
 
 # Exclude from processing.
 # The following items will not be processed, by default.
