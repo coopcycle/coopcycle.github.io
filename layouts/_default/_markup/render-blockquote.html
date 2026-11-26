@@ -1,0 +1,11 @@
+{{- /* GitHub's alert syntax ("> [!NOTE]") becomes a callout here, as it does on the release page */ -}}
+{{- if eq .Type "alert" -}}
+<aside class="callout callout-{{ .AlertType }}">
+  <p class="callout-title">{{ or .AlertTitle (.AlertType | strings.FirstUpper) }}</p>
+  {{ .Text }}
+</aside>
+{{- else -}}
+<blockquote>
+  {{ .Text }}
+</blockquote>
+{{- end -}}

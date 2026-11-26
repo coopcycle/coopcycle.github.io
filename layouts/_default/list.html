@@ -1,0 +1,20 @@
+{{ define "main" }}
+  {{ if .IsHome }}
+    <p class="intro">{{ site.Params.description }}</p>
+  {{ else }}
+    <h1>{{ .Title }}</h1>
+  {{ end }}
+
+  {{ $pages := where site.RegularPages "Section" "releases" }}
+  {{ if not .IsHome }}{{ $pages = .RegularPages }}{{ end }}
+
+  <ul class="releases">
+    {{ range $pages.ByDate.Reverse }}
+      <li>
+        <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+        <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 January 2006" }}</time>
+        {{ with .Params.summary }}<p>{{ . }}</p>{{ end }}
+      </li>
+    {{ end }}
+  </ul>
+{{ end }}

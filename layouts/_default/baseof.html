@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="{{ site.LanguageCode }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} · {{ site.Title }}{{ end }}</title>
+  <meta name="description" content="{{ with .Params.summary }}{{ . }}{{ else }}{{ site.Params.description }}{{ end }}">
+  {{ with resources.Get "logo.svg" -}}
+  <link rel="icon" href="{{ .RelPermalink }}" type="image/svg+xml">
+  {{- end }}
+  {{- /* The hash in the file name makes browsers fetch the CSS again after each change */}}
+  {{ with resources.Get "style.css" | minify | fingerprint -}}
+  <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">
+  {{- end }}
+  {{ with resources.Get "zoom.js" | minify | fingerprint -}}
+  <script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" defer></script>
+  {{- end }}
+  {{ range .AlternativeOutputFormats -}}
+  {{ printf `<link rel="%s" type="%s" href="%s" title="%s">` .Rel .MediaType.Type .Permalink site.Title | safeHTML }}
+  {{ end -}}
+</head>
+<body>
+  <header class="site">
+    <a href="{{ "/" | relURL }}" class="brand">
+      {{ with resources.Get "logo.svg" }}<img src="{{ .RelPermalink }}" alt="" width="24" height="24">{{ end }}
+      CoopCycle releases
+    </a>
+  </header>
+  <main>
+    {{ block "main" . }}{{ end }}
+  </main>
+  <footer class="site">
+    <a href="{{ site.Params.repo }}/releases">All releases on GitHub</a>
+    <a href="{{ "index.xml" | relURL }}">RSS</a>
+  </footer>
+</body>
+</html>

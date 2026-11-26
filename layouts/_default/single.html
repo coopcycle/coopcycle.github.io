@@ -1,0 +1,17 @@
+{{ define "main" }}
+  <article>
+    <h1>{{ .Title }}</h1>
+    <p class="muted">
+      Released on <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 January 2006" }}</time>
+      {{- with .Params.version }} · <a href="{{ site.Params.repo }}/releases/tag/{{ . }}">{{ . }} on GitHub</a>{{ end }}
+    </p>
+    <div class="prose">
+      {{ .Content }}
+    </div>
+  </article>
+
+  <nav class="pager">
+    {{ with .NextInSection }}<a href="{{ .RelPermalink }}" rel="next">← {{ .Title }}</a>{{ else }}<span></span>{{ end }}
+    {{ with .PrevInSection }}<a href="{{ .RelPermalink }}" rel="prev">{{ .Title }} →</a>{{ end }}
+  </nav>
+{{ end }}

@@ -1,0 +1,34 @@
+{{- /* Screenshots become figures captioned with their alt text. Local ones,
+       taken at 2×, are shown at half their pixel size so they stay sharp.
+       An .mp4 plays muted on a loop, like an animated screenshot; the .png of the
+       same name next to it is the still shown before it plays. */ -}}
+{{- $res := .Page.Resources.Get .Destination -}}
+{{- $isVideo := strings.HasSuffix (lower .Destination) ".mp4" -}}
+{{- $still := cond $isVideo (.Page.Resources.Get (replaceRE `\.mp4$` ".png" .Destination)) $res -}}
+{{- $src := .Destination -}}
+{{- with $res }}{{ $src = .RelPermalink }}{{ end -}}
+{{- $attrs := "" -}}
+{{- with $still -}}
+  {{- $attrs = printf ` width="%d" height="%d"` (div .Width 2) (div .Height 2) -}}
+{{- end -}}
+{{- /* .PlainText drops the typographer's curly quotes: start from .Text */ -}}
+{{- $alt := .Text | plainify | htmlUnescape -}}
+{{- $media := "" -}}
+{{- if $isVideo -}}
+  {{- $poster := "" -}}
+  {{- with $still }}{{ $poster = printf ` poster="%s"` .RelPermalink }}{{ end -}}
+  {{- $media = printf `<video src="%s"%s%s aria-label="%s" autoplay muted loop playsinline preload="metadata"></video>`
+        $src $poster $attrs $alt -}}
+{{- else -}}
+  {{- $media = printf `<img src="%s" alt="%s"%s loading="lazy" decoding="async">` $src $alt $attrs -}}
+{{- end -}}
+{{- if .IsBlock -}}
+<figure>
+  {{ $media | safeHTML }}
+  {{- with .Text }}
+  <figcaption>{{ . | safeHTML }}</figcaption>
+  {{- end }}
+</figure>
+{{- else -}}
+{{ $media | safeHTML }}
+{{- end -}}

@@ -1,0 +1,19 @@
+baseURL = 'https://dev.coopcycle.org/'
+languageCode = 'en'
+title = 'CoopCycle releases'
+
+disableKinds = ['taxonomy', 'term']
+
+[params]
+  description = 'What changed in the CoopCycle back office, release by release, for dispatchers and admins.'
+  repo = 'https://github.com/coopcycle/coopcycle-web'
+
+[markup.goldmark.renderer]
+  unsafe = false
+
+# Lets the image render hook output a <figure> instead of an <img> inside a <p>
+[markup.goldmark.parser]
+  wrapStandAloneImageWithinParagraph = false
+
+[markup.goldmark.extensions.typographer]
+  disable = false
